@@ -31,6 +31,12 @@ class Character
 	// This may be broken up into heal() and damage() functions
 	void setHealth(int newHealth);
 
+	// This function decreases the Character's health by the passed value
+	void damage(int damage);
+
+	// This function increases the Character's health by the passed value
+	void heal(int hitpoints);
+
 	// This accessor function returns the current health of the Character
 	int getHealth();
 
@@ -46,9 +52,12 @@ class Character
 	// This function returns the status of a Character based on its health
 	string status();
 
+	// This function causes one Character to attack another Character
+	void attack (Character * enemy);
+
     protected:
         string name;
-	int maxHealth = 100;
+	int maxHealth;
 	int health;
 	bool alive;
 };

@@ -12,7 +12,7 @@
 #include <iostream>
 #include <iomanip>
 #include <cstdlib>
-#include <ctime>
+#include "Random.h"
 #include "Character.h"
 
 using namespace std;
@@ -30,13 +30,15 @@ bool replay();
 
 int main()
 {
-  srand(time(0));
-    
-  Character * player = new Character("Player1");
-  Character * enemy = new Character("Enemy");
+  Character * player;
+  Character * enemy;
   bool play = true;
     
   while (play) {
+    player = new Character("Player1");
+    enemy = new Character("Enemy");
+
+
     displayBanner();
     
     while (enemy->isAlive() && player->isAlive())
@@ -163,7 +165,7 @@ void playerAttack(char decision, Character* enemy)
     cout << "\nYou kick at your enemy.\n";
         
   if (attackHits) {
-    enemy->setHealth(enemy->getHealth() - damage);
+    enemy->damage(damage);
 
     cout << damage << " damage!" << endl;
     attackHits = false;
@@ -222,13 +224,9 @@ void decideAttack(char decision, bool& attackHits, int& damage)
 
 void punch(bool& hit, int& damage)
 {
-  int hitChance;
+  damage = random(25) + 15;    // Dmg 15-40
     
-  damage = (rand() % 26) + 15;    // Dmg 15-40
-    
-  hitChance = rand() % 101;
-    
-  if (hitChance <= 80)
+  if (random(100) <= 80)
     hit = true;
 }
 
@@ -249,14 +247,9 @@ void punch(bool& hit, int& damage)
 
 void kick(bool& hit, int& damage)
 {
-  int hitChance;
+  damage = random(25) + 30;
     
-  damage = (rand() % 26) + 30;
-    
-  hitChance = rand() % 101;
-    
-    
-  if (hitChance <= 60)
+  if (random(100) <= 60)
     hit = true;
 }
 
@@ -281,7 +274,7 @@ void enemyAttack(Character* player)
   bool attackHits = false;
   int damage;
     
-  actionChance = rand() % 2;
+  actionChance = random(2);
   if (actionChance == 0)
     punch(attackHits, damage);
   else if (actionChance == 1)
@@ -293,7 +286,7 @@ void enemyAttack(Character* player)
     cout << "Your enemy kicks at you. ";
 
   if (attackHits) {
-    player->setHealth(player->getHealth() - damage);
+    player->damage(damage);
     cout << damage << " damage!" << endl << endl;
     attackHits = false;
   } else

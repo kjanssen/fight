@@ -4,11 +4,13 @@
 
 #include <iostream>
 #include "Character.h"
+#include "Random.h"
 using namespace std;
 
 Character::Character ()
 {
     name = "DefaultName";
+    maxHealth = 100;
     health = maxHealth;
     alive = true;
 }
@@ -16,6 +18,7 @@ Character::Character ()
 Character::Character (string newName)
 {
     name = newName;
+    maxHealth = 100;
     health = maxHealth;
     alive = true;
 }
@@ -38,6 +41,16 @@ int Character::getMaxHealth ()
 void Character::setHealth (int newHealth)
 {
     health = newHealth;
+}
+
+void Character::damage (int damage)
+{
+    health -= damage;
+}
+
+void Character::heal (int hitpoints)
+{
+    health += hitpoints;
 }
 
 int Character::getHealth ()
@@ -72,4 +85,9 @@ string Character::status ()
         return "He feels uneasy. He takes a step back.";
     else
         return "He steadily holds his ground.";
+}
+
+void attack (Character * enemy)
+{
+    
 }

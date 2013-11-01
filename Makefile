@@ -4,7 +4,7 @@ CFLAGS=-c -Wall -std=c++11 -MMD
 LDFLAGS=
 
 MAIN=main.cpp
-SOURCES=Character.cpp $(MAIN) 
+SOURCES=Character.cpp Random.cpp $(MAIN) 
 OBJECTS=$(SOURCES:.cpp=.o)
 DEPS=$(OBJECTS:.o=.d)
 EXECUTABLE=$(MAIN:.cpp=.out)
