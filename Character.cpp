@@ -17,7 +17,7 @@ Character::Character ()
     SP = maxSP;
     att = 50;
     def = 50;
-    eva = 1;
+    eva = 5;
     alive = true;
 }
 
@@ -31,7 +31,7 @@ Character::Character (string newName)
     SP = maxSP;
     att = 50;
     def = 50;
-    eva = 1;
+    eva = 5;
     alive = true;
 }
 

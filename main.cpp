@@ -1,23 +1,28 @@
 //*******************************************************************
 //
-// Kyle Janssen - Fight_v2.cpp - 
+// Kyle Janssen - main.cpp -
 //
-// Revised edition of game made about a year ago. Fight is a simple
-// battle game with perfectly even odds in which the player fights
-// an unidentified opponent. The player and his opponent punch and
-// kick at eachother until one of them is dead.
+// Fight - A turn-based fighting game
+//
+// Fight is a simple fighting game inwhich the player fights
+// an opponent of various classes.
 //
 //*******************************************************************
 
 #include <iostream>
 #include <iomanip>
-#include <cstdlib>
 #include "Random.h"
 #include "Character.h"
+#include "Berserker.h"
+#include "Fighter.h"
+#include "Knight.h"
+#include "Rogue.h"
+#include "Wizard.h"
 
 using namespace std;
 
-void displayBanner(Character * enemy);
+void displayBanner();
+Character * pickCharacter(bool isPlayer);
 void doOneTurn(Character * player, Character * enemy);
 void displayMenu(Character * player, Character * enemy);
 bool replay();
@@ -29,13 +34,15 @@ int main()
   bool play = true;
     
   while (play) {
-    player = new Character("Player1");
-    enemy = new Character("Enemy");
+    displayBanner();
 
+    player = pickCharacter(true);
+    enemy = pickCharacter(false);
 
-    displayBanner(enemy);
+    cout << "The " << enemy->getName() << " stares you straight in the eyes. What ";
+    cout << "do you do?" << endl << endl;
     
-    while (enemy->isAlive() && player->isAlive())
+    while (player->isAlive() && enemy->isAlive())
       doOneTurn(player, enemy);
 
     displayMenu(player, enemy);
@@ -50,7 +57,7 @@ int main()
 
 
 
-void displayBanner(Character * enemy)
+void displayBanner()
 {
   cout << endl;
   cout << "//////////////////////////////////////////////////////////////" << endl;
@@ -58,9 +65,58 @@ void displayBanner(Character * enemy)
   cout << "//                          FIGHT!                          //" << endl;
   cout << "//                                                          //" << endl;
   cout << "//////////////////////////////////////////////////////////////" << endl << endl;
+}
 
-  cout << "The " << enemy->getName() << " stares you straight in the eyes. What ";
-  cout << "do you do?" << endl << endl;
+
+Character * pickCharacter(bool isPlayer)
+{
+  string who = (isPlayer) ? "your" : "enemy";
+
+  cout << "\tChoose " << who << " class:\n\n";
+  cout << "\t\t1. Berserker\n";
+  cout << "\t\t2. Fighter\n";
+  cout << "\t\t3. Knight\n";
+  cout << "\t\t4. Rogue\n";
+  cout << "\t\t5. Wizard\n";
+  cout << "\t\t6. Random\n\n\t> ";
+
+  char choice;
+  cin >> choice;
+  cout << endl;
+
+  while (!(choice - '0' > 0 && choice - '0' <= 6) && choice != 'q') {
+    cout << "Choice invalid.\n\n\t> ";
+    cin >> choice;
+    cout << endl;
+  }
+
+  if (choice == 'q') {
+    Character * character = new Character;
+    character->kill();
+    return character;
+  }
+
+  int choiceNum = (choice == '6') ? random(5) : choice - '0';
+  
+  switch (choiceNum) {
+    case 1:
+      return  new Berserker();
+
+    case 2:
+      return new Fighter();
+
+    case 3:
+      return new Knight();
+
+    case 4:
+      return new Rogue();
+
+    case 5:
+      return new Wizard();
+
+    default:
+      return new Character();
+  }
 }
 
 
@@ -124,19 +180,40 @@ void displayMenu(Character * player, Character * enemy)
   cout << "\t+----------------------------------------+\n";
   cout << "\t| " << setw(39) << left << enemy->getName() << "|\n";
   cout << "\t|                                        |\n";
-  cout << "\t| HP " << setw(3) << right << enemy->getHP() << "/" << left << enemy->getMaxHP() << " [";
-  for (int i = 0; i < 25; i++) { if (enemy->getHP() > i * 4) cout << "|"; else cout << " "; }
+  cout << "\t| HP " << setw(3) << right << enemy->getHP() << "/" 
+       << setw(3) << left << enemy->getMaxHP() << " [";
+
+  for (int i = 0; i < 25; i++) {
+    if (enemy->getHP() > i * enemy->getMaxHP() / 25)
+      cout << "|";
+    else cout << " ";
+  }
+
   cout << "] |\n\t+----------------------------------------+\n\n";
 
 
   cout << "\t+----------------------------------------+\n";
   cout << "\t| " << setw(39) << left << player->getName() << "|\n";
   cout << "\t|                                        |\n";
-  cout << "\t| HP " << setw(3) << right <<  player->getHP() << "/" << left << player->getMaxHP() << " [";
-  for (int i = 0; i < 25; i++) { if (player->getHP() > i * 4) cout << "|"; else cout << " "; }
+  cout << "\t| HP " << setw(3) << right <<  player->getHP() << "/"
+       << setw(3) << left << player->getMaxHP() << " [";
+
+  for (int i = 0; i < 25; i++) {
+    if (player->getHP() > i * player->getMaxHP() / 25)
+      cout << "|";
+    else cout << " ";
+  }
+
   cout << "] |\n";
-  cout << "\t| SP " << setw(3) << right <<  player->getSP() << "/" << left << player->getMaxSP() << " [";
-  for (int i = 0; i < 25; i++) { if (player->getSP() > i * 4) cout << "|"; else cout << " "; }
+  cout << "\t| SP " << setw(3) << right <<  player->getSP() << "/"
+       << setw(3) << left << player->getMaxSP() << " [";
+
+  for (int i = 0; i < 25; i++) {
+    if (player->getSP() > i * player->getMaxSP() / 25)
+      cout << "|";
+    else cout << " ";
+  }
+
   cout << "] |\n";
   cout << "\t|                                        |\n";
 

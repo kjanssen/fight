@@ -4,15 +4,15 @@ Hero Classes
 - Berserker
   - Strong and crazy
 
-  - High HP
-  - Low SP
+  - Ave HP
+  - Ave SP
   - High Att
   - Low Def
   - Low Eva
 
     > Attack (with axe)
     > Get Mad (ups att/lowers def)
-    >
+    > Charge
     >
 
 - Fighter

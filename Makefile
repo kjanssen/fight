@@ -4,7 +4,7 @@ CFLAGS=-c -Wall -std=c++11 -MMD
 LDFLAGS=
 
 MAIN=main.cpp
-SOURCES=Character.cpp Random.cpp $(MAIN) 
+SOURCES=Character.cpp Hero.cpp Berserker.cpp Fighter.cpp Knight.cpp Rogue.cpp Wizard.cpp Monster.cpp Random.cpp $(MAIN) 
 OBJECTS=$(SOURCES:.cpp=.o)
 DEPS=$(OBJECTS:.o=.d)
 EXECUTABLE=$(MAIN:.cpp=.out)
