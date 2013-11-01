@@ -1,0 +1,88 @@
+Hero Classes
+------------
+
+- Berserker
+  - Strong and crazy
+
+  - High HP
+  - Low SP
+  - High Att
+  - Low Def
+  - Low Eva
+
+    > Attack (with axe)
+    > Get Mad (ups att/lowers def)
+    >
+    >
+
+- Fighter
+  - Smart and versatile
+
+  - Ave HP
+  - Ave SP
+  - Ave Att
+  - Ave Def
+  - Low Eva
+
+    > Attack (with sword)
+    > Well-Placed Blow
+    > Block (temp eva boost)
+    >
+
+- Knight
+  - Tough and experienced
+
+  - High HP
+  - Low SP
+  - Low Att
+  - High Def
+  - Low Eva
+
+    > Attack (with sword)
+    > Dig In (up def)
+    >
+    >
+
+- Rogue
+  - Frail but sly
+
+  - Low HP
+  - Ave SP
+  - Ave Att
+  - Low Def
+  - High Eva
+
+    > Attack (with dagger)
+    > Sidestep (evade)
+    > Debilitate (lower enemy def)
+    >
+
+    - Free attack on evade
+
+- Wizard
+  - MAGIC
+
+  - Low HP
+  - High SP
+  - High Att
+  - Low Def
+  - Low Eva
+
+    > Attack (with staff)
+    > Fireball
+    > Freeze (Chance to skip enemy's next turn)
+    > Daze (lower enemy's att)
+
+- Cleric
+  - HEALZ
+
+  - Low HP
+  - High SP
+  - High Att
+  - Low Def
+  - Low Eva
+
+    > Attack (with rod)
+    > Smite (does regular damage unless target is evil)
+    > Restore
+    > Bless (resistance to status effects)

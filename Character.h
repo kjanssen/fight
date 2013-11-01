@@ -25,20 +25,23 @@ class Character
 	string getName();
 
 	// This accessor returns the max health of the Character
-	int getMaxHealth ();
+	int getMaxHP ();
+
+	// This accessor returns the max skill points of the Character
+	int getMaxSP ();
 
 	// This mutator function sets the health value of the Character
 	// This may be broken up into heal() and damage() functions
-	void setHealth(int newHealth);
+	void setHP(int newHP);
 
 	// This function decreases the Character's health by the passed value
 	void damage(int damage);
 
 	// This function increases the Character's health by the passed value
-	void heal(int hitpoints);
+	void heal(int hitPoints);
 
 	// This accessor function returns the current health of the Character
-	int getHealth();
+	int getHP();
 
 	// This function sets alive to false
         void kill();
@@ -56,10 +59,17 @@ class Character
 	void attack (Character * enemy);
 
     protected:
+	string actions[4];
         string name;
-	int maxHealth;
-	int health;
+	int maxHP;
+	int maxSP;
+	int HP;
+	int SP;
+	int att;
+	int def;
+	int eva;
 	bool alive;
+	
 };
 
 #endif

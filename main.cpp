@@ -84,7 +84,7 @@ void doOneTurn(Character* player, Character* enemy)
 {
   char decision;
     
-  displayMenu(player->getHealth());
+  displayMenu(player->getHP());
   cin >> decision;
   checkInput(decision, 'a', 'b');
     
@@ -174,7 +174,7 @@ void playerAttack(char decision, Character* enemy)
     
   cout << enemy->status() << endl << endl;
 
-  if (enemy->getHealth() < 1)
+  if (enemy->getHP() < 1)
       enemy->kill();
 }
 
@@ -292,7 +292,7 @@ void enemyAttack(Character* player)
   } else
     cout << "He misses!" << endl;
     
-  if (player->getHealth() <= 0) {
+  if (player->getHP() <= 0) {
     player->kill();
     cout << "You are dead." << endl << endl;
   }

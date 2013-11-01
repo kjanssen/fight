@@ -10,16 +10,26 @@ using namespace std;
 Character::Character ()
 {
     name = "DefaultName";
-    maxHealth = 100;
-    health = maxHealth;
+    maxHP = 100;
+    maxSP = 100;
+    HP = maxHP;
+    SP = maxSP;
+    att = 50;
+    def = 50;
+    eva = 1;
     alive = true;
 }
 
 Character::Character (string newName)
 {
     name = newName;
-    maxHealth = 100;
-    health = maxHealth;
+    maxHP = 100;
+    maxSP = 100;
+    HP = maxHP;
+    SP = maxSP;
+    att = 50;
+    def = 50;
+    eva = 1;
     alive = true;
 }
 
@@ -33,29 +43,34 @@ string Character::getName ()
     return name;
 }
 
-int Character::getMaxHealth ()
+int Character::getMaxHP ()
 {
-    return maxHealth;
+    return maxHP;
 }
 
-void Character::setHealth (int newHealth)
+int Character::getMaxSP ()
 {
-    health = newHealth;
+    return maxSP;
+}
+
+void Character::setHP (int newHP)
+{
+    HP = newHP;
 }
 
 void Character::damage (int damage)
 {
-    health -= damage;
+    HP -= damage;
 }
 
-void Character::heal (int hitpoints)
+void Character::heal (int hitPoints)
 {
-    health += hitpoints;
+    HP += hitPoints;
 }
 
-int Character::getHealth ()
+int Character::getHP ()
 {
-    return health;
+    return HP;
 }
 
 void Character::kill ()
@@ -75,13 +90,13 @@ bool Character::isAlive ()
 
 string Character::status ()
 {
-    if (health <= 0) {
+    if (HP <= 0) {
         return "He drops to the floor, dead.";
-    } else if (health < 25)
+    } else if (HP < 25)
         return "He coughs up blood. The end is near.";
-    else if (health < 50)
+    else if (HP < 50)
         return "He looks weary. You're not making this easy.";
-    else if (health < 75)
+    else if (HP < 75)
         return "He feels uneasy. He takes a step back.";
     else
         return "He steadily holds his ground.";
