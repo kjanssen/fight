@@ -17,15 +17,9 @@
 
 using namespace std;
 
-void displayBanner();
+void displayBanner(Character * enemy);
 void doOneTurn(Character * player, Character * enemy);
-void checkInput(char& decision, char dec1, char dec2);
-void displayMenu(int playerHealth);
-void playerAttack(char decision, Character * enemy);
-void decideAttack(char decision, bool& attackHits, int& damage);
-void punch(bool& hit, int& damage);
-void kick(bool& hit, int& damage);
-void enemyAttack(Character * player);
+void displayMenu(Character * player, Character * enemy);
 bool replay();
 
 int main()
@@ -39,10 +33,12 @@ int main()
     enemy = new Character("Enemy");
 
 
-    displayBanner();
+    displayBanner(enemy);
     
     while (enemy->isAlive() && player->isAlive())
       doOneTurn(player, enemy);
+
+    displayMenu(player, enemy);
 
     play = replay();   
   }
@@ -54,15 +50,16 @@ int main()
 
 
 
-void displayBanner()
+void displayBanner(Character * enemy)
 {
+  cout << endl;
   cout << "//////////////////////////////////////////////////////////////" << endl;
   cout << "//                                                          //" << endl;
   cout << "//                          FIGHT!                          //" << endl;
   cout << "//                                                          //" << endl;
   cout << "//////////////////////////////////////////////////////////////" << endl << endl;
 
-  cout << "Your opponent stares you straight in the eyes. What ";
+  cout << "The " << enemy->getName() << " stares you straight in the eyes. What ";
   cout << "do you do?" << endl << endl;
 }
 
@@ -82,43 +79,35 @@ void displayBanner()
 
 void doOneTurn(Character* player, Character* enemy)
 {
-  char decision;
+  char choice;
+  displayMenu(player, enemy);
+  cin >> choice;
+  cout << endl;
+  
+  while (!(choice - '0' > 0 && choice - '0' <= player->numActions()) && choice != 'q') {
+    cout << "Choice invalid.\n\n\t> ";
+    cin >> choice;
+    cout << endl;
+  }
+
+  if (choice == 'q') {
+    player->kill();
+    return;
+  }
     
-  displayMenu(player->getHP());
-  cin >> decision;
-  checkInput(decision, 'a', 'b');
-    
-  playerAttack(decision, enemy);
-    
-  if (enemy->isAlive())
-    enemyAttack(player);
-}
+  player->doAction(choice - '0', enemy);
 
-
-
-
-
-//*******************************************************************
-//
-// This function checks to make sure the user input is valid.
-//
-// pre: the player has made a decision
-//
-// post: if the decision was invalid, it has been made valid
-//
-//*******************************************************************
-
-void checkInput(char& decision, char dec1, char dec2)
-{
-  while (decision != dec1 && decision != dec2) {
-    cout << "Try again (" << dec1 << " or " << dec2 << "): ";
-    cin >> decision;
+  cout << enemy->status() << endl << endl;
+  if (enemy->isAlive()) {
+    enemy->attackPlayer(player);
+    cout << endl;
   }
 }
 
 
 
-    
+
+
 
 //*******************************************************************
 //
@@ -130,177 +119,33 @@ void checkInput(char& decision, char dec1, char dec2)
 //
 //*******************************************************************
     
-void displayMenu(int playerHealth)
+void displayMenu(Character * player, Character * enemy)
 {
-  cout << "   ---------------------- " << endl;
-  cout << "  |  a. Punch    |   HP  |" << endl;
-  cout << "  |  b. Kick     |  " << setw(3) << playerHealth << "  |" << endl;
-  cout << "   ---------------------- " << endl << endl;
+  cout << "\t+----------------------------------------+\n";
+  cout << "\t| " << setw(39) << left << enemy->getName() << "|\n";
+  cout << "\t|                                        |\n";
+  cout << "\t| HP " << setw(3) << right << enemy->getHP() << "/" << left << enemy->getMaxHP() << " [";
+  for (int i = 0; i < 25; i++) { if (enemy->getHP() > i * 4) cout << "|"; else cout << " "; }
+  cout << "] |\n\t+----------------------------------------+\n\n";
+
+
+  cout << "\t+----------------------------------------+\n";
+  cout << "\t| " << setw(39) << left << player->getName() << "|\n";
+  cout << "\t|                                        |\n";
+  cout << "\t| HP " << setw(3) << right <<  player->getHP() << "/" << left << player->getMaxHP() << " [";
+  for (int i = 0; i < 25; i++) { if (player->getHP() > i * 4) cout << "|"; else cout << " "; }
+  cout << "] |\n";
+  cout << "\t| SP " << setw(3) << right <<  player->getSP() << "/" << left << player->getMaxSP() << " [";
+  for (int i = 0; i < 25; i++) { if (player->getSP() > i * 4) cout << "|"; else cout << " "; }
+  cout << "] |\n";
+  cout << "\t|                                        |\n";
+
+  for (int i = 0; i < 4; i++)
+    cout << "\t|     " << i + 1 << ". " << setw(32) << left << player->action(i) << "|\n";
+
+  cout << "\t+----------------------------------------+\n\n\t> ";
 }
     
-
-
-
-
-//*******************************************************************
-//
-// This function excecutes the player's portion of the turn.
-//
-// pre: player has made valid decision
-//
-// post: player has made an attack
-//
-//*******************************************************************
-
-void playerAttack(char decision, Character* enemy)
-{
-  bool attackHits = false;
-  int damage;
-    
-  decideAttack(decision, attackHits, damage);
-    
-  if (decision == 'a')
-    cout << "\nYou punch at your enemy.\n";
-  else
-    cout << "\nYou kick at your enemy.\n";
-        
-  if (attackHits) {
-    enemy->damage(damage);
-
-    cout << damage << " damage!" << endl;
-    attackHits = false;
-  } else
-    cout << "You miss!" << endl;
-    
-  cout << enemy->status() << endl << endl;
-
-  if (enemy->getHP() < 1)
-      enemy->kill();
-}
-
-
-
-
-
-//*******************************************************************
-//
-// This function takes the players choice and excecutes a specific
-// attack.
-//
-// pre: decision == a || b
-//
-// post: either punch() or kick() has been excecuted
-//
-//*******************************************************************
-
-void decideAttack(char decision, bool& attackHits, int& damage)
-{
-  switch(decision)
-    {
-    case 'a' : 
-      punch(attackHits, damage);
-      break;
-    case 'b' : kick(attackHits, damage);
-      break;
-    default  : cout << "Something is wrong.";
-      break;
-    }
-}
-
-
-
-
-
-//*******************************************************************
-//
-// This function caluculates the success of a punch attack the has an
-// 80% chance to hit and does 15-40 dmg.
-//
-// pre: player chooses to punch
-//
-// post: damage and hitChance are calculated
-//
-//*******************************************************************
-
-void punch(bool& hit, int& damage)
-{
-  damage = random(25) + 15;    // Dmg 15-40
-    
-  if (random(100) <= 80)
-    hit = true;
-}
-
-
-
-
-
-//*******************************************************************
-//
-// This function caluculates the success of a kick attack the has a
-// 60% chance to hit and does 30-55 dmg.
-//
-// pre: player chooses to kick
-//
-// post: damage and hitChance are calculated
-//
-//*******************************************************************
-
-void kick(bool& hit, int& damage)
-{
-  damage = random(25) + 30;
-    
-  if (random(100) <= 60)
-    hit = true;
-}
-
-
-
-
-
-
-//*******************************************************************
-//
-// This function excecutes the player's portion of the turn.
-//
-// pre: player has taken his turn
-//
-// post: enemy has made an attack
-//
-//*******************************************************************
-
-void enemyAttack(Character* player)
-{
-  int actionChance;
-  bool attackHits = false;
-  int damage;
-    
-  actionChance = random(2);
-  if (actionChance == 0)
-    punch(attackHits, damage);
-  else if (actionChance == 1)
-    kick(attackHits, damage);
-        
-  if (actionChance == 0) 
-    cout << "Your enemy punches at you. ";       
-  else if (actionChance == 1)
-    cout << "Your enemy kicks at you. ";
-
-  if (attackHits) {
-    player->damage(damage);
-    cout << damage << " damage!" << endl << endl;
-    attackHits = false;
-  } else
-    cout << "He misses!" << endl;
-    
-  if (player->getHP() <= 0) {
-    player->kill();
-    cout << "You are dead." << endl << endl;
-  }
-}
-
-
-
-
 
 
 
@@ -310,8 +155,6 @@ bool replay()
     
   cout << "Would you like to play again? (y or n): ";
   cin >> decision;
-    
-  checkInput(decision, 'y', 'n');
     
   if (decision == 'y') {
     cout << endl << endl;
