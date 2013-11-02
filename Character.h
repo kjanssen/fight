@@ -28,7 +28,7 @@ class Character
 
 	// This function has the Character perform the action correspoinding to
 	// actionNum
-	void doAction (int actionNum, Character * target);
+	virtual void doAction (int actionNum, Character * target);
 
 	// This mutator function sets the name of the Character
 	void setName(string newName);
@@ -86,7 +86,16 @@ class Character
 	bool isAlive();
 
 	// This function returns the status of a Character based on its HP
-	string status();
+	virtual string status();
+
+	// This function returns the text for a player attacking an enemy
+	virtual string playerAttackText(string name);
+
+	// This function returns the text for an enemy attacking a player
+	virtual string enemyAttackText(string name);
+
+	// This function is called when a Character evades an attack
+	virtual void onEvade(Character * target);
 
 	// This function causes a player Character to attack an enemy Character
 	void attackEnemy (Character * enemy);

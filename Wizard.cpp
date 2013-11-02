@@ -20,3 +20,27 @@ Wizard::Wizard ()
     eva = 5;
     alive = true;
 }
+
+string Wizard::status ()
+{
+    if (HP <= 0) {
+        return "\tAll that's left is a bloody wizard hat.";
+    } else if (HP < maxHP / 4)
+        return "\tIt's beginning to look like magic might not save him this time.";
+    else if (HP < maxHP / 2)
+        return "\tHe is not used to this kind of punishment, and it's taking its toll.";
+    else if (HP < 3 * maxHP / 4)
+        return "\tHis body is soft, but he has life in him yet.";
+    else
+        return "\tHis fingertips glow with magical energy.";
+}
+
+string Wizard::playerAttackText (string enemyName)
+{
+    return "\tYou try to club the " + enemyName + " with your staff.";
+}
+
+string Wizard::enemyAttackText (string enemyName)
+{
+    return "\tThe " + enemyName + " tries to club you with his staff.";
+}

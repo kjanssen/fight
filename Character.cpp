@@ -150,19 +150,33 @@ string Character::status ()
 {
     if (HP <= 0) {
         return "\tHe drops to the floor, dead.";
-    } else if (HP < 25)
+    } else if (HP < maxHP / 4)
         return "\tHe coughs up blood. The end is near.";
-    else if (HP < 50)
+    else if (HP < maxHP / 2)
         return "\tHe looks weary. You're not making this easy.";
-    else if (HP < 75)
+    else if (HP < 3 * maxHP / 4)
         return "\tHe feels uneasy. He takes a step back.";
     else
         return "\tHe steadily holds his ground.";
 }
 
+string Character::playerAttackText (string enemyName)
+{
+    return "\tYou swing at the " + enemyName + ".";
+}
+
+string Character::enemyAttackText (string enemyName)
+{
+    return "\tThe " + enemyName + " swings at you.";
+}
+
+void Character::onEvade (Character * target)
+{
+}
+
 void Character::attackEnemy (Character * enemy)
 {
-    cout << "\tYou swing at the " << enemy->name << ".\n" ;
+    cout << playerAttackText(enemy->getName()) << endl;
     int hitChance = random(100);
     
     if (hitChance <= 80 - enemy->eva) {
@@ -175,8 +189,9 @@ void Character::attackEnemy (Character * enemy)
 
     } else if (hitChance <= 80) {
         // enemy evades
-
+      
         cout << "\tHe evades the attack!\n";
+	enemy->onEvade(this);
 
     } else {
         // atack misses
@@ -188,7 +203,7 @@ void Character::attackEnemy (Character * enemy)
 
 void Character::attackPlayer (Character * player)
 {
-    cout << "\tThe " << name << " swings at you.\n";
+    cout << enemyAttackText(name) << endl;
     int hitChance = random(100);
 
     if (hitChance <= 80 - player->eva) {
@@ -205,6 +220,7 @@ void Character::attackPlayer (Character * player)
         // enemy evades
 
         cout << "\tYou evade the attack!\n";
+	player->onEvade(this);
 
     } else {
         // atack misses

@@ -177,8 +177,11 @@ void doOneTurn(Character* player, Character* enemy)
     
 void displayMenu(Character * player, Character * enemy)
 {
+  string enemyName = (enemy->isAlive()) ? enemy->getName() : enemy->getName() + " x_x";
+  string playerName = (player->isAlive()) ? player->getName() : player->getName() + " x_x";
+  
   cout << "\t+----------------------------------------+\n";
-  cout << "\t| " << setw(39) << left << enemy->getName() << "|\n";
+  cout << "\t| " << setw(39) << left << enemyName << "|\n";
   cout << "\t|                                        |\n";
   cout << "\t| HP " << setw(3) << right << enemy->getHP() << "/" 
        << setw(3) << left << enemy->getMaxHP() << " [";
@@ -193,7 +196,7 @@ void displayMenu(Character * player, Character * enemy)
 
 
   cout << "\t+----------------------------------------+\n";
-  cout << "\t| " << setw(39) << left << player->getName() << "|\n";
+  cout << "\t| " << setw(39) << left << playerName << "|\n";
   cout << "\t|                                        |\n";
   cout << "\t| HP " << setw(3) << right <<  player->getHP() << "/"
        << setw(3) << left << player->getMaxHP() << " [";

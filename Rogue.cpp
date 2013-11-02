@@ -19,3 +19,32 @@ Rogue::Rogue ()
     eva = 15;
     alive = true;
 }
+
+string Rogue::status ()
+{
+    if (HP <= 0) {
+        return "\tHe drops. Looks like he wont live to fight another day.";
+    } else if (HP < maxHP / 4)
+        return "\t.He's bloody and wondering why he let this go so far.";
+    else if (HP < maxHP / 2)
+        return "\tHe now moves frantically rather that gracefully.";
+    else if (HP < 3 * maxHP / 4)
+        return "\tHis confidence has now turned to determination.";
+    else
+        return "\tHe looks confident and light on his feet.";
+}
+
+string Rogue::playerAttackText (string enemyName)
+{
+    return "\tYou slash at the " + enemyName + " with your dagger.";
+}
+
+string Rogue::enemyAttackText (string enemyName)
+{
+    return "\tThe " + enemyName + " slashes at you with his dagger.";
+}
+
+void Rogue::onEvade (Character * target)
+{
+
+}
