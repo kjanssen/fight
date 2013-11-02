@@ -41,7 +41,7 @@ Fighter::Fighter (bool isEnemyChar)
 string Fighter::status ()
 {
     if (HP <= 0) {
-        return "\tHe collapsed in a heap as the life drians from his eyes.";
+        return "\tHe collapses in a heap as the life drians from his eyes.";
     } else if (HP < maxHP / 4)
         return "\tHe can barely stand, but bloody fingers still grip his weapon.";
     else if (HP < maxHP / 2)

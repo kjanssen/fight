@@ -27,8 +27,12 @@ class Character
 	// expects value 0-3
 	string action (int actionNum);
 
+	// This function returns the SP cost of the action corresponding to
+	// actionNum
+	int getCost (int actionNum);
+
 	// This mutator function sets the name of the Character
-	void setName(string newName);
+	void setName (string newName);
 
 	// This accessor function returns the name of the Character
 	string getName();
@@ -104,6 +108,7 @@ class Character
 
     protected:
 	string actions[4];
+	int cost[4];
         string name;
 	int maxHP;
 	int maxSP;

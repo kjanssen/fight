@@ -146,6 +146,12 @@ void doOneTurn(Character* player, Character* enemy)
     cout << endl;
   }
 
+  while (player->getCost(choice - '0') > player->getSP()) {
+    cout << "Not enough SP.\n\n\t> ";
+    cin >> choice;
+    cout << endl;
+  }
+
   if (choice == 'q') {
     player->kill();
     return;

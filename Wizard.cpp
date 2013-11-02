@@ -3,11 +3,14 @@
 // Contents: This file contains the implementation of the Wizard class
 
 #include "Wizard.h"
+#include "Random.h"
 
 Wizard::Wizard ()
 {
     actions[0] = "Attack";
-    //actions[1] = "Fireball";
+    cost[0] = 0;
+    actions[1] = "Fireball";
+    cost[1] = 40;
     //actions[2] = "Freeze";
     //actions[3] = "Daze";
     name = "Wizard";
@@ -25,7 +28,9 @@ Wizard::Wizard ()
 Wizard::Wizard (bool isEnemyChar)
 {
     actions[0] = "Attack";
-    //actions[1] = "Fireball";
+    cost[0] = 0;
+    actions[1] = "Fireball";
+    cost[1] = 40;
     //actions[2] = "Freeze";
     //actions[3] = "Daze";
     name = "Wizard";
@@ -60,4 +65,76 @@ string Wizard::attackText (string enemyName)
         return "\tYou try to club the " + enemyName + " with your staff.";
     else 
         return "\tThe " + enemyName + " tries to club you with his staff.";
+}
+
+void Wizard::doAction (int actionNum, Character * target)
+{
+    spendSP(cost[actionNum - 1]);
+
+    if (actionNum == 1) attack(target);
+    else if (actionNum == 2) fireball(target);
+}
+
+void Wizard::attack (Character * target)
+{
+    string enemyName = isEnemy() ? name : target->getName();
+
+    cout << attackText(enemyName) << endl;
+    int hitChance = random(100);
+
+    if (hitChance <= 80 - target->getEva()) {
+        // attack hits
+        // base damage is 15-40 * attacker's attack / target's defense
+      
+        int dam = (random(25) + 15) * att / 3 / target->getDef();
+	target->damage(dam);
+	cout << "\t" << dam << " damage!\n";
+      
+	if (isEnemy() && !target->isAlive()) cout << "\tYou are dead.\n";
+
+    } else if (hitChance <= 80) {
+        // enemy evades
+      
+        cout << (isEnemy() ? "\tYou evade the attack!\n" : "\tHe evades the attack!\n");
+	target->onEvade(this);
+
+    } else {
+        // atack misses
+
+        cout << (isEnemy() ? "\tHe misses!\n" : "\tYou miss!\n");
+
+  }
+}
+
+void Wizard::fireball (Character * target)
+{
+    string enemyName = isEnemy() ? name : target->getName();
+    int hitChance = random(100);
+
+    if (!isEnemy())
+        cout << "\tYou hurl a ball of fire at the " << enemyName << ".\n";
+    else
+        cout << "\tThe " << enemyName << " hurls a ball of fire at you.\n";
+
+    if (hitChance <= 80 - target->getEva()) {
+      // fireball hits
+      // base damage is 15-40 * attacker's attack / target's defense
+
+      int dam = (random(25) + 15) * att / target->getDef();
+      target->damage(dam);
+      cout << "\tIt burns for " << dam << " damage!\n";
+
+      if (isEnemy() && !target->isAlive()) cout << "\tYou are dead.\n";
+
+    } else if (hitChance <= 80) {
+      // enemy evades
+
+      cout << (isEnemy() ? "\tYou evade the fireball!\n" : "\tHe evades the firebal!\n");
+
+    } else {
+      // atack misses
+
+      cout << "\tThe fireball misses!\n";
+
+    }
 }

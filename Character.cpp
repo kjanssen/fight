@@ -10,6 +10,7 @@ using namespace std;
 Character::Character ()
 {
     actions[0] = "Attack";
+    cost[0] = 0;
     name = "Character";
     maxHP = 100;
     maxSP = 100;
@@ -25,6 +26,7 @@ Character::Character ()
 Character::Character (bool isEnemyChar)
 {
     actions[0] = "Attack";
+    cost[0] = 0;
     name = "Character";
     maxHP = 100;
     maxSP = 100;
@@ -49,6 +51,11 @@ int Character::numActions ()
 string Character::action (int actionNum)
 {
     return actions[actionNum];
+}
+
+int Character::getCost (int actionNum)
+{
+    return cost[actionNum + 1];
 }
 
 void Character::setName (string newName)
@@ -186,11 +193,11 @@ void Character::attack (Character * target)
     cout << attackText(enemyName) << endl;
     int hitChance = random(100);
     
-    if (hitChance <= 80 - target->eva) {
+    if (hitChance <= 80 - target->getEva()) {
         // attack hits
         // base damage is 15-40 * attacker's attack / target's defense
 
-        int dam = (random(25) + 15) * att / target->def; 
+        int dam = (random(25) + 15) * att / target->getDef(); 
         target->damage(dam);
 	cout << "\t" << dam << " damage!\n";
 
