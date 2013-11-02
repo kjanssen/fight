@@ -17,6 +17,23 @@ Knight::Knight ()
     def = 70;
     eva = 5;
     alive = true;
+    enemyChar = false;
+}
+
+Knight::Knight (bool isEnemyChar)
+{
+    actions[0] = "Attack";
+    //actions[1] = "Dig In";
+    name = "Knight";
+    maxHP = 130;
+    maxSP = 70;
+    HP = maxHP;
+    SP = maxSP;
+    att = 30;
+    def = 70;
+    eva = 5;
+    alive = true;
+    enemyChar = isEnemyChar;
 }
 
 string Knight::status ()
@@ -33,12 +50,10 @@ string Knight::status ()
         return "\tHe stands tall in shining armor.";
 }
 
-string Knight::playerAttackText (string enemyName)
+string Knight::attackText (string enemyName)
 {
-    return "\tYou swing your gleaming sword at the " + enemyName + ".";
-}
-
-string Knight::enemyAttackText (string enemyName)
-{
-    return "\tThe " + enemyName + " swings his gleaming sword at you.";
+    if (!isEnemy())
+        return "\tYou swing your gleaming sword at the " + enemyName + ".";
+    else 
+        return "\tThe " + enemyName + " swings his gleaming sword at you.";
 }

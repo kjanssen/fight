@@ -18,6 +18,24 @@ Rogue::Rogue ()
     def = 30;
     eva = 15;
     alive = true;
+    enemyChar = false;
+}
+
+Rogue::Rogue (bool isEnemyChar)
+{
+    actions[0] = "Attack";
+    //actions[1] = "Sidestep";
+    //actions[2] = "Debilitate";
+    name = "Rogue";
+    maxHP = 70;
+    maxSP = 100;
+    HP = maxHP;
+    SP = maxSP;
+    att = 50;
+    def = 30;
+    eva = 15;
+    alive = true;
+    enemyChar = isEnemyChar;
 }
 
 string Rogue::status ()
@@ -34,17 +52,14 @@ string Rogue::status ()
         return "\tHe looks confident and light on his feet.";
 }
 
-string Rogue::playerAttackText (string enemyName)
+string Rogue::attackText (string enemyName)
 {
-    return "\tYou slash at the " + enemyName + " with your dagger.";
-}
-
-string Rogue::enemyAttackText (string enemyName)
-{
-    return "\tThe " + enemyName + " slashes at you with his dagger.";
+    if (!isEnemy())
+        return "\tYou slash at the " + enemyName + " with your dagger.";
+    else 
+        return "\tThe " + enemyName + " slashes at you with his dagger.";
 }
 
 void Rogue::onEvade (Character * target)
 {
-
 }

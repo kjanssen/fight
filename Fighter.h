@@ -14,14 +14,14 @@ class Fighter : public Hero
         // Default Constructor
         Fighter();
 
+	// This constructor tells the Fighter if it is an enemy or not
+	Fighter(bool isEnemyChar);
+
         // This function returns the status of a Character based on its HP
         string status();
 
         // This function returns the text for a player attacking an enemy
-        string playerAttackText(string name);
-
-        // This function returns the text for an enemy attacking a player
-        string enemyAttackText(string name);
+        string attackText(string enemyName);
 };
 
 #endif

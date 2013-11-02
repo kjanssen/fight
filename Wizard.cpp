@@ -19,6 +19,25 @@ Wizard::Wizard ()
     def = 30;
     eva = 5;
     alive = true;
+    enemyChar = false;
+}
+
+Wizard::Wizard (bool isEnemyChar)
+{
+    actions[0] = "Attack";
+    //actions[1] = "Fireball";
+    //actions[2] = "Freeze";
+    //actions[3] = "Daze";
+    name = "Wizard";
+    maxHP = 70;
+    maxSP = 130;
+    HP = maxHP;
+    SP = maxSP;
+    att = 70;
+    def = 30;
+    eva = 5;
+    alive = true;
+    enemyChar = isEnemyChar;
 }
 
 string Wizard::status ()
@@ -35,12 +54,10 @@ string Wizard::status ()
         return "\tHis fingertips glow with magical energy.";
 }
 
-string Wizard::playerAttackText (string enemyName)
+string Wizard::attackText (string enemyName)
 {
-    return "\tYou try to club the " + enemyName + " with your staff.";
-}
-
-string Wizard::enemyAttackText (string enemyName)
-{
-    return "\tThe " + enemyName + " tries to club you with his staff.";
+    if (!isEnemy())
+        return "\tYou try to club the " + enemyName + " with your staff.";
+    else 
+        return "\tThe " + enemyName + " tries to club you with his staff.";
 }

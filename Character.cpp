@@ -10,7 +10,7 @@ using namespace std;
 Character::Character ()
 {
     actions[0] = "Attack";
-    name = "DefaultName";
+    name = "Character";
     maxHP = 100;
     maxSP = 100;
     HP = maxHP;
@@ -19,12 +19,13 @@ Character::Character ()
     def = 50;
     eva = 5;
     alive = true;
+    enemyChar = false;
 }
 
-Character::Character (string newName)
+Character::Character (bool isEnemyChar)
 {
     actions[0] = "Attack";
-    name = newName;
+    name = "Character";
     maxHP = 100;
     maxSP = 100;
     HP = maxHP;
@@ -33,6 +34,7 @@ Character::Character (string newName)
     def = 50;
     eva = 5;
     alive = true;
+    enemyChar = isEnemyChar;
 }
 
 int Character::numActions ()
@@ -47,11 +49,6 @@ int Character::numActions ()
 string Character::action (int actionNum)
 {
     return actions[actionNum];
-}
-
-void Character::doAction (int actionNum, Character * target)
-{
-    if (actionNum == 1) attackEnemy(target);
 }
 
 void Character::setName (string newName)
@@ -146,6 +143,11 @@ bool Character::isAlive ()
     return alive;
 }
 
+bool Character::isEnemy ()
+{
+    return enemyChar;
+}
+
 string Character::status ()
 {
     if (HP <= 0) {
@@ -160,71 +162,50 @@ string Character::status ()
         return "\tHe steadily holds his ground.";
 }
 
-string Character::playerAttackText (string enemyName)
+string Character::attackText (string enemyName)
 {
-    return "\tYou swing at the " + enemyName + ".";
-}
-
-string Character::enemyAttackText (string enemyName)
-{
-    return "\tThe " + enemyName + " swings at you.";
+    if (!isEnemy())
+        return "\tYou swing at the " + enemyName + ".";
+    else
+        return "\tThe " + enemyName + " swings at you.";
 }
 
 void Character::onEvade (Character * target)
 {
 }
 
-void Character::attackEnemy (Character * enemy)
+void Character::doAction (int actionNum, Character * target)
 {
-    cout << playerAttackText(enemy->getName()) << endl;
+    if (actionNum == 1) attack(target);
+}
+
+void Character::attack (Character * target)
+{
+    string enemyName = isEnemy() ? name : target->getName();
+  
+    cout << attackText(enemyName) << endl;
     int hitChance = random(100);
     
-    if (hitChance <= 80 - enemy->eva) {
+    if (hitChance <= 80 - target->eva) {
         // attack hits
-        // base damage is 15-40 * player's attack / enemy's defense
+        // base damage is 15-40 * attacker's attack / target's defense
 
-        int dam = (random(25) + 15) * att / enemy->def; 
-        enemy->damage(dam);
+        int dam = (random(25) + 15) * att / target->def; 
+        target->damage(dam);
 	cout << "\t" << dam << " damage!\n";
+
+	if (isEnemy() && !target->isAlive()) cout << "\tYou are dead.\n";
 
     } else if (hitChance <= 80) {
         // enemy evades
       
-        cout << "\tHe evades the attack!\n";
-	enemy->onEvade(this);
+        cout << (isEnemy() ? "\tYou evade the attack!\n" : "\tHe evades the attack!\n");
+	target->onEvade(this);
 
     } else {
         // atack misses
 
-        cout << "\tYou miss!\n";
+        cout << (isEnemy() ? "\tHe misses!\n" : "\tYou miss!\n");
 
-    }
-}
-
-void Character::attackPlayer (Character * player)
-{
-    cout << enemyAttackText(name) << endl;
-    int hitChance = random(100);
-
-    if (hitChance <= 80 - player->eva) {
-        // attack hits
-        // base damage is 15-40 * enemys's attack / player's defense
-
-        int dam = (random(25) + 15) * att / player->def;
-	player->damage(dam);
-	cout << "\t" << dam << " damage!\n";
-
-	if (!player->isAlive()) cout << "\tYou are dead.\n";
-
-    } else if (hitChance <= 80) {
-        // enemy evades
-
-        cout << "\tYou evade the attack!\n";
-	player->onEvade(this);
-
-    } else {
-        // atack misses
-
-        cout << "\tHe misses!\n";
     }
 }

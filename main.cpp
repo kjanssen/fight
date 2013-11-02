@@ -22,7 +22,7 @@
 using namespace std;
 
 void displayBanner();
-Character * pickCharacter(bool isPlayer);
+Character * pickCharacter(bool isEnemy);
 void doOneTurn(Character * player, Character * enemy);
 void displayMenu(Character * player, Character * enemy);
 bool replay();
@@ -36,8 +36,8 @@ int main()
   while (play) {
     displayBanner();
 
-    player = pickCharacter(true);
-    enemy = pickCharacter(false);
+    player = pickCharacter(false);
+    enemy = pickCharacter(true);
 
     cout << "The " << enemy->getName() << " stares you straight in the eyes. What ";
     cout << "do you do?" << endl << endl;
@@ -68,9 +68,9 @@ void displayBanner()
 }
 
 
-Character * pickCharacter(bool isPlayer)
+Character * pickCharacter(bool isEnemy)
 {
-  string who = (isPlayer) ? "your" : "enemy";
+  string who = (isEnemy) ? "enemy" : "your";
 
   cout << "\tChoose " << who << " class:\n\n";
   cout << "\t\t1. Berserker\n";
@@ -100,22 +100,22 @@ Character * pickCharacter(bool isPlayer)
   
   switch (choiceNum) {
     case 1:
-      return  new Berserker();
+      return  new Berserker(isEnemy);
 
     case 2:
-      return new Fighter();
+      return new Fighter(isEnemy);
 
     case 3:
-      return new Knight();
+      return new Knight(isEnemy);
 
     case 4:
-      return new Rogue();
+      return new Rogue(isEnemy);
 
     case 5:
-      return new Wizard();
+      return new Wizard(isEnemy);
 
     default:
-      return new Character();
+      return new Character(isEnemy);
   }
 }
 
@@ -155,7 +155,7 @@ void doOneTurn(Character* player, Character* enemy)
 
   cout << enemy->status() << endl << endl;
   if (enemy->isAlive()) {
-    enemy->attackPlayer(player);
+    enemy->attack(player);
     cout << endl;
   }
 }

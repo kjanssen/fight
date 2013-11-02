@@ -18,6 +18,24 @@ Berserker::Berserker ()
     def = 30;
     eva = 5;
     alive = true;
+    enemyChar = false;
+}
+
+Berserker::Berserker (bool isEnemyChar)
+{
+    actions[0] = "Attack";
+    //actions[1] = "Get Mad";
+    //actions[2] = "Charge";
+    name = "Berserker";
+    maxHP = 100;
+    maxSP = 100;
+    HP = maxHP;
+    SP = maxSP;
+    att = 70;
+    def = 30;
+    eva = 5;
+    alive = true;
+    enemyChar = isEnemyChar;
 }
 
 string Berserker::status ()
@@ -34,12 +52,10 @@ string Berserker::status ()
         return "\tMuscles flexing, he lets out a battle cry.";
 }
 
-string Berserker::playerAttackText (string enemyName)
+string Berserker::attackText (string enemyName)
 {
-    return "\tYou swing your axe at the " + enemyName + ".";
-}
-
-string Berserker::enemyAttackText (string enemyName)
-{
-    return "\tThe " + enemyName + " swings his axe at you.";
+    if (!isEnemy())
+        return "\tYou swing your axe at the " + enemyName + ".";
+    else 
+        return "\tThe " + enemyName + " swings his axe at you.";
 }

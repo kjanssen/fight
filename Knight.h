@@ -14,14 +14,14 @@ class Knight : public Hero
         // Default Constructor
         Knight();
 
+	// This constructor tell the Knight if it is an enemy or not
+	Knight(bool isEnemyChar);
+
         // This function returns the status of a Character based on its HP
         string status();
 
         // This function returns the text for a player attacking an enemy
-        string playerAttackText(string name);
-
-        // This function returns the text for an enemy attacking a player
-        string enemyAttackText(string name);
+        string attackText(string enemyName);
 };
 
 #endif

@@ -18,6 +18,24 @@ Fighter::Fighter ()
     def = 50;
     eva = 5;
     alive = true;
+    enemyChar = false;
+}
+
+Fighter::Fighter (bool isEnemyChar)
+{
+    actions[0] = "Attack";
+    //actions[1] = "Well-Placed Blow";
+    //actions[2] = "Block";
+    name = "Fighter";
+    maxHP = 100;
+    maxSP = 100;
+    HP = maxHP;
+    SP = maxSP;
+    att = 50;
+    def = 50;
+    eva = 5;
+    alive = true;
+    enemyChar = isEnemyChar;
 }
 
 string Fighter::status ()
@@ -34,12 +52,10 @@ string Fighter::status ()
         return "\tHe stands tall, ready for anything.";
 }
 
-string Fighter::playerAttackText (string enemyName)
+string Fighter::attackText (string enemyName)
 {
-    return "\tYou swing your sword at the " + enemyName + ".";
-}
-
-string Fighter::enemyAttackText (string enemyName)
-{
-    return "\tThe " + enemyName + " swings his sword at you.";
+    if (!isEnemy())
+        return "\tYou swing your sword at the " + enemyName + ".";
+    else 
+        return "\tThe " + enemyName + " swings his sword at you.";
 }
