@@ -252,7 +252,7 @@ bool replay()
 {
   char decision;
     
-  cout << "Would you like to play again? (y or n): ";
+  cout << "\tWould you like to play again? (y or n)\n\n\t> ";
   cin >> decision;
     
   if (decision == 'y') {

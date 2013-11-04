@@ -10,7 +10,7 @@ Wizard::Wizard ()
     actions[0] = "Attack";
     cost[0] = 0;
     actions[1] = "Fireball";
-    cost[1] = 40;
+    cost[1] = 30;
     //actions[2] = "Freeze";
     //actions[3] = "Daze";
     name = "Wizard";
@@ -30,7 +30,7 @@ Wizard::Wizard (bool isEnemyChar)
     actions[0] = "Attack";
     cost[0] = 0;
     actions[1] = "Fireball";
-    cost[1] = 40;
+    cost[1] = 30;
     //actions[2] = "Freeze";
     //actions[3] = "Daze";
     name = "Wizard";
