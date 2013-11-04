@@ -1,0 +1,40 @@
+Monsters
+--------
+
+- Bandit
+
+- Thug
+
+- Giant Rat
+
+- Wolf
+
+- Skeleton
+
+- Zombie
+
+- Vampire
+
+- Warlock
+
+- Necromancer
+
+- Ogre
+
+- Minotaur
+
+- Orc
+
+- Goblin
+
+- Knoll
+
+- Owlbear
+
+- Slime
+
+- Gelatinous Cube
+
+- Harpy
+
+- Dragon/Drake (this reminds me, I need to implement type effectiveness sometime)

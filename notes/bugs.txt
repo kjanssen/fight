@@ -1,0 +1,14 @@
+
+
+- There may be a bug that causes a character
+  to think it's out of SP when it isn't. I think it
+  comes up when you do multiple plays in one session,
+  but I haven't been able to pin it down.
+
+- When the player is killed by an enemy Rogue's attack
+  of opportunity, his status message still prints afterwards
+  and he then takes his turn as normal. The turn should stop
+  when hte player is killed.
+
+- This may be a general game balance thing, but it is
+  nearly impossible for the Wizard to kill the Knight.

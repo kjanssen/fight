@@ -1,0 +1,6 @@
+
+- Need to implement some sort of damage type system. Maybe have attacks send dam * att
+  and a damage type to damage() and have damage() factor in def and type effectiveness.
+
+- Need to figure out how to implement in-battle effects that have finite time frames,
+  as in number of turns. This will need a kind of upkeep phase to work.
