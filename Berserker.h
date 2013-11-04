@@ -22,6 +22,13 @@ class Berserker : public Hero
 
         // This function returns the text for a player attacking an enemy
         string attackText(string enemyName);
+
+        // This function has the Berserker perform the action correspoinding to
+        // actionNum
+        void doAction (int actionNum, Character * target);
+
+	// This action raises the Berserker's att, but lowers his def
+	void getMad ();
 };
 
 #endif

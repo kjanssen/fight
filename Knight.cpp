@@ -7,7 +7,9 @@
 Knight::Knight ()
 {
     actions[0] = "Attack";
-    //actions[1] = "Dig In";
+    cost[0] = 0;
+    actions[1] = "Dig In";
+    cost[1] = 30;
     name = "Knight";
     maxHP = 130;
     maxSP = 70;
@@ -23,7 +25,9 @@ Knight::Knight ()
 Knight::Knight (bool isEnemyChar)
 {
     actions[0] = "Attack";
-    //actions[1] = "Dig In";
+    cost[0] = 0;
+    actions[1] = "Dig In";
+    cost[1] = 30;
     name = "Knight";
     maxHP = 130;
     maxSP = 70;
@@ -56,4 +60,29 @@ string Knight::attackText (string enemyName)
         return "\tYou swing your gleaming sword at the " + enemyName + ".";
     else 
         return "\tThe " + enemyName + " swings his gleaming sword at you.";
+}
+
+void Knight::doAction (int actionNum, Character * target)
+{
+    spendSP(cost[actionNum - 1]);
+
+    if (actionNum == 1) {
+        attack(target);
+        if (target->isEnemy())
+	    cout << target->status() << endl;
+
+    } else if (actionNum == 2)
+        digIn();
+
+    cout << endl;
+}
+
+void Knight::digIn ()
+{
+    def += 10;
+
+    if (!isEnemy())
+      cout << "\tYou dig your heels into the ground, nothing is getting through you.\n";
+    else
+      cout << "\tThe Knight digs his heels into the ground and raises his shield.\n";
 }

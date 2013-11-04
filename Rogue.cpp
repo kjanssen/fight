@@ -7,7 +7,9 @@
 Rogue::Rogue ()
 {
     actions[0] = "Attack";
-    //actions[1] = "Sidestep";
+    cost[0] = 0;
+    actions[1] = "Sidestep";
+    cost[1] = 30;
     //actions[2] = "Debilitate";
     name = "Rogue";
     maxHP = 70;
@@ -24,7 +26,9 @@ Rogue::Rogue ()
 Rogue::Rogue (bool isEnemyChar)
 {
     actions[0] = "Attack";
-    //actions[1] = "Sidestep";
+    cost[0] = 0;
+    actions[1] = "Sidestep";
+    cost[1] = 30;
     //actions[2] = "Debilitate";
     name = "Rogue";
     maxHP = 70;
@@ -43,7 +47,7 @@ string Rogue::status ()
     if (HP <= 0) {
         return "\tHe drops. Looks like he wont live to fight another day.";
     } else if (HP < maxHP / 4)
-        return "\t.He's bloody and wondering why he let this go so far.";
+        return "\tHe's bloody and wondering why he let this go so far.";
     else if (HP < maxHP / 2)
         return "\tHe now moves frantically rather that gracefully.";
     else if (HP < 3 * maxHP / 4)
@@ -62,4 +66,31 @@ string Rogue::attackText (string enemyName)
 
 void Rogue::onEvade (Character * target)
 {
+    cout << "\n\tAttack of Opportunity!\n";
+    attack(target);
+}
+
+void Rogue::doAction (int actionNum, Character * target)
+{
+    spendSP(cost[actionNum - 1]);
+
+    if (actionNum == 1) {
+        attack(target);
+        if (target->isEnemy())
+	    cout << target->status() << endl;
+
+    } else if (actionNum == 2)
+        sidestep();
+
+    cout << endl;
+}
+
+void Rogue::sidestep ()
+{
+    eva += 5;
+
+    if (!isEnemy())
+      cout << "\tYou take a step to the side, away from your enemy's gaze.\n";
+    else
+      cout << "\tThe rogue takes a step to the side, why is he so hard to hit?\n";
 }

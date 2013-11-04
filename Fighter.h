@@ -22,6 +22,14 @@ class Fighter : public Hero
 
         // This function returns the text for a player attacking an enemy
         string attackText(string enemyName);
+
+        // This function has the Fighter perform the action correspoinding to
+        // actionNum
+        void doAction (int actionNum, Character * target);
+
+	// This action executes an attack that cannot be evaded and has a
+	// higher minimum damage
+	void wellPlacedBlow (Character * target);
 };
 
 #endif

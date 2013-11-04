@@ -85,7 +85,7 @@ Character * pickCharacter(bool isEnemy)
   cout << endl;
 
   while (!(choice - '0' > 0 && choice - '0' <= 6) && choice != 'q') {
-    cout << "Choice invalid.\n\n\t> ";
+    cout << "\tChoice invalid.\n\n\t> ";
     cin >> choice;
     cout << endl;
   }
@@ -137,17 +137,18 @@ void doOneTurn(Character* player, Character* enemy)
 {
   char choice;
   displayMenu(player, enemy);
+  cout << "\t> ";
   cin >> choice;
   cout << endl;
   
   while (!(choice - '0' > 0 && choice - '0' <= player->numActions()) && choice != 'q') {
-    cout << "Choice invalid.\n\n\t> ";
+    cout << "\tChoice invalid.\n\n\t> ";
     cin >> choice;
     cout << endl;
   }
 
-  while (player->getCost(choice - '0') > player->getSP()) {
-    cout << "Not enough SP.\n\n\t> ";
+  while (player->getCost(choice - '0' - 1) > player->getSP() && choice != 'q') {
+    cout << "\tNot enough SP.\n\n\t> ";
     cin >> choice;
     cout << endl;
   }
@@ -159,9 +160,15 @@ void doOneTurn(Character* player, Character* enemy)
     
   player->doAction(choice - '0', enemy);
 
-  cout << enemy->status() << endl << endl;
   if (enemy->isAlive()) {
-    enemy->attack(player);
+
+    int enemyAction = random(100);
+
+    if (enemyAction <= 33 && enemy->getCost(1) < enemy->getSP())
+      enemy->doAction(2, player);
+    else
+      enemy->doAction(1, player);
+
     cout << endl;
   }
 }
@@ -185,7 +192,8 @@ void displayMenu(Character * player, Character * enemy)
 {
   string enemyName = (enemy->isAlive()) ? enemy->getName() : enemy->getName() + " x_x";
   string playerName = (player->isAlive()) ? player->getName() : player->getName() + " x_x";
-  
+
+  // Print the enemy's healthbar
   cout << "\t+----------------------------------------+\n";
   cout << "\t| " << setw(39) << left << enemyName << "|\n";
   cout << "\t|                                        |\n";
@@ -200,7 +208,7 @@ void displayMenu(Character * player, Character * enemy)
 
   cout << "] |\n\t+----------------------------------------+\n\n";
 
-
+  // Print the player's menu
   cout << "\t+----------------------------------------+\n";
   cout << "\t| " << setw(39) << left << playerName << "|\n";
   cout << "\t|                                        |\n";
@@ -226,10 +234,15 @@ void displayMenu(Character * player, Character * enemy)
   cout << "] |\n";
   cout << "\t|                                        |\n";
 
-  for (int i = 0; i < 4; i++)
-    cout << "\t|     " << i + 1 << ". " << setw(32) << left << player->action(i) << "|\n";
+  for (int i = 0; i < 4; i++) {
+    cout << "\t|     " << i + 1 << ". " << setw(24) << left << player->action(i);
+    if (player->getCost(i) != 0)
+      cout << setw(3) << right << player->getCost(i) << " SP  |\n";
+    else
+      cout << "        |\n";
+  }
 
-  cout << "\t+----------------------------------------+\n\n\t> ";
+  cout << "\t+----------------------------------------+\n\n";
 }
     
 

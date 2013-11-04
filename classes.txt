@@ -73,6 +73,9 @@ Hero Classes
     > Freeze (Chance to skip enemy's next turn)
     > Daze (lower enemy's att)
 
+
+-----------------------------------------------
+
 - Cleric
   - HEALZ
 
@@ -86,3 +89,31 @@ Hero Classes
     > Smite (does regular damage unless target is evil)
     > Restore
     > Bless (resistance to status effects)
+
+- Ranger
+  - Ranged attacks
+
+  - Ave HP
+  - Ave SP
+  - Ave Att
+  - Low Def
+  - Ave Eva
+
+    > Attack
+    > Shoot
+    > Poison Arrow
+    >
+
+- Lancer/Dragoon
+  - Lance/spear and heavy armor
+  
+  - Ave HP
+  - Low SP
+  - High Att
+  - High Def
+  - Low Eva
+
+    > Attack
+    > Lunge (maybe Jump)
+    >
+    >

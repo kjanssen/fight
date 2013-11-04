@@ -11,6 +11,9 @@ Character::Character ()
 {
     actions[0] = "Attack";
     cost[0] = 0;
+    cost[1] = 0;
+    cost[2] = 0;
+    cost[3] = 0;
     name = "Character";
     maxHP = 100;
     maxSP = 100;
@@ -27,6 +30,9 @@ Character::Character (bool isEnemyChar)
 {
     actions[0] = "Attack";
     cost[0] = 0;
+    cost[1] = 0;
+    cost[2] = 0;
+    cost[3] = 0;
     name = "Character";
     maxHP = 100;
     maxSP = 100;
@@ -55,7 +61,7 @@ string Character::action (int actionNum)
 
 int Character::getCost (int actionNum)
 {
-    return cost[actionNum + 1];
+    return cost[actionNum];
 }
 
 void Character::setName (string newName)
@@ -183,7 +189,15 @@ void Character::onEvade (Character * target)
 
 void Character::doAction (int actionNum, Character * target)
 {
-    if (actionNum == 1) attack(target);
+    spendSP(cost[actionNum -1]);  
+
+    if (actionNum == 1) {
+        attack(target);
+        if (target->isEnemy())
+	    cout << target->status() << endl;
+    }
+
+    cout << endl;
 }
 
 void Character::attack (Character * target)

@@ -7,7 +7,9 @@
 Berserker::Berserker ()
 {
     actions[0] = "Attack";
-    //actions[1] = "Get Mad";
+    cost[0] = 0;
+    actions[1] = "Get Mad";
+    cost[1] = 30;
     //actions[2] = "Charge";
     name = "Berserker";
     maxHP = 100;
@@ -24,7 +26,9 @@ Berserker::Berserker ()
 Berserker::Berserker (bool isEnemyChar)
 {
     actions[0] = "Attack";
-    //actions[1] = "Get Mad";
+    cost[0] = 0;
+    actions[1] = "Get Mad";
+    cost[1] = 30;
     //actions[2] = "Charge";
     name = "Berserker";
     maxHP = 100;
@@ -58,4 +62,30 @@ string Berserker::attackText (string enemyName)
         return "\tYou swing your axe at the " + enemyName + ".";
     else 
         return "\tThe " + enemyName + " swings his axe at you.";
+}
+
+void Berserker::doAction (int actionNum, Character * target)
+{
+    spendSP(cost[actionNum -1]);
+
+    if (actionNum == 1) {
+        attack(target);
+	if (target->isEnemy())
+	    cout << target->status() << endl;
+    
+    } else if (actionNum == 2)
+        getMad();
+
+    cout << endl;
+}
+
+void Berserker::getMad ()
+{
+    att += 10;
+    def -= 5;
+
+    if (!isEnemy())
+      cout << "\tYou start to get mad, your only goal is to kill.\n";
+    else
+      cout << "\tThe Berserker is getting angry. His attacks are more severe, but he looks more open.\n";
 }

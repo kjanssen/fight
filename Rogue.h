@@ -26,6 +26,13 @@ class Rogue : public Hero
         // This function is called when a Rogue evades an attack and
 	// gives the Rogue a free attack of opportunity
         void onEvade(Character * target);
+
+        // This function has the Rogue perform the action correspoinding to
+        // actionNum
+        void doAction (int actionNum, Character * target);
+
+	// This action raises the Rogues evasiveness
+	void sidestep ();
 };
 
 #endif

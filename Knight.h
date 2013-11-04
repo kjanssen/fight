@@ -22,6 +22,13 @@ class Knight : public Hero
 
         // This function returns the text for a player attacking an enemy
         string attackText(string enemyName);
+
+        // This function has the Knight perform the action correspoinding to
+        // actionNum
+        void doAction (int actionNum, Character * target);
+
+	// This action raises the Knights def
+	void digIn ();
 };
 
 #endif

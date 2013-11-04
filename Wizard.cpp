@@ -71,8 +71,18 @@ void Wizard::doAction (int actionNum, Character * target)
 {
     spendSP(cost[actionNum - 1]);
 
-    if (actionNum == 1) attack(target);
-    else if (actionNum == 2) fireball(target);
+    if (actionNum == 1) {
+        attack(target);
+        if (target->isEnemy())
+	    cout << target->status() << endl;
+
+    } else if (actionNum == 2) {
+        fireball(target);
+        if (target->isEnemy())
+            cout << target->status() << endl;
+    }
+
+    cout << endl;
 }
 
 void Wizard::attack (Character * target)
