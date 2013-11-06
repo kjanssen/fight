@@ -72,12 +72,12 @@ void Fighter::doAction (int actionNum, Character * target)
     if (actionNum == 1) {
         attack(target);
         if (target->isEnemy())
-	    cout << target->status() << endl;
+            cout << target->status() << endl;
 
     } else if (actionNum == 2) {
         wellPlacedBlow(target);
         if (target->isEnemy())
-	    cout << target->status() << endl;
+            cout << target->status() << endl;
     }
 
     cout << endl;
@@ -87,12 +87,12 @@ void Fighter::wellPlacedBlow (Character * target)
 {
     string enemyName = isEnemy() ? name : target->getName();
     int hitChance = random(100);
-    
+
     if (!isEnemy())
         cout << "\tYou time the strike just right, and slash at the " << enemyName << ".\n";
     else
         cout << "\tThe " << enemyName << " waits for just the right moment, then strikes.\n";
-    
+
     if (hitChance <= 80) {
         // the strike hits
         // base damage is 25-40 * attacker's attack / target's defense
@@ -100,14 +100,14 @@ void Fighter::wellPlacedBlow (Character * target)
         int dam = (random(15) + 25) * att / target->getDef();
         target->damage(dam);
         cout << "\t" << dam << " damage!\n";
-      
+
         if (isEnemy() && !target->isAlive()) cout << "\tYou are dead.\n";
-      
+
     } else {
         // atack misses
-      
+
         cout << "\tThe attack misses!\n";
-      
+
     }
 }
 

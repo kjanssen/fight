@@ -14,8 +14,8 @@ class Berserker : public Hero
         // Default Constructor
         Berserker();
 
-	// This constructor tells the Berserker if it is an enemy or not
-	Berserker(bool isEnemyChar);
+        // This constructor tells the Berserker if it is an enemy or not
+        Berserker(bool isEnemyChar);
 
         // This function returns the status of a Character based on its HP
         string status();
@@ -27,8 +27,8 @@ class Berserker : public Hero
         // actionNum
         void doAction (int actionNum, Character * target);
 
-	// This action raises the Berserker's att, but lowers his def
-	void getMad ();
+        // This action raises the Berserker's att, but lowers his def
+        void getMad ();
 };
 
 #endif

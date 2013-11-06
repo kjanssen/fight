@@ -14,8 +14,8 @@ class Fighter : public Hero
         // Default Constructor
         Fighter();
 
-	// This constructor tells the Fighter if it is an enemy or not
-	Fighter(bool isEnemyChar);
+        // This constructor tells the Fighter if it is an enemy or not
+        Fighter(bool isEnemyChar);
 
         // This function returns the status of a Character based on its HP
         string status();
@@ -27,9 +27,9 @@ class Fighter : public Hero
         // actionNum
         void doAction (int actionNum, Character * target);
 
-	// This action executes an attack that cannot be evaded and has a
-	// higher minimum damage
-	void wellPlacedBlow (Character * target);
+        // This action executes an attack that cannot be evaded and has a
+        // higher minimum damage
+        void wellPlacedBlow (Character * target);
 };
 
 #endif
